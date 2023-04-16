@@ -57,7 +57,7 @@ print("Start training")
 # Train and save a model.
 best_nb = train_model(X_train, y_train)
 
-# Calculate metrics
+# Calculate overall metrics
 compute_roc_curve(X_test, y_test, best_model=best_nb)
 precision, recall, fbeta = compute_model_metrics(y=y_test, preds=best_nb.predict(X_test))
 print(f"precision: {precision}")

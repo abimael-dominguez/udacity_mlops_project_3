@@ -59,7 +59,10 @@ best_nb = train_model(X_train, y_train)
 
 # Calculate metrics
 compute_roc_curve(X_test, y_test, best_model=best_nb)
-compute_model_metrics(y=y_test, preds=best_nb.predict(X_test))
+precision, recall, fbeta = compute_model_metrics(y=y_test, preds=best_nb.predict(X_test))
+print(f"precision: {precision}")
+print(f"recall: {recall}")
+print(f"fbeta: {fbeta}")
 joblib.dump(best_nb, '../model/naive_bayes_model.pkl')
 
 print("Finish training")

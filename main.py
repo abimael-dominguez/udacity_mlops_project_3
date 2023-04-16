@@ -20,6 +20,10 @@ items = {}
 # Initialize FastAPI instance
 app = FastAPI()
 
+# Welcome message in the root
+@app.get("/")
+def read_root():
+    return {"greeting": "Hello World!"}
 
 # This allows sending of data (our TaggedItem) via POST to the API.
 @app.post("/items/")

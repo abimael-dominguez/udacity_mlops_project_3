@@ -3,6 +3,7 @@ See other branches:
     git log --graph --decorate --oneline
 To run the tests:
     python -m pytest test_main.py
+    pytest -vv test_main.py
 """
 
 from fastapi.testclient import TestClient
@@ -14,10 +15,9 @@ client = TestClient(app)
 
 # Test "/" endpoint
 def test_api_locally_get_root():
-    r = client.get("/items/42?count=5")  # /items/42?count=5 #  / 
+    r = client.get("/")
     assert r.status_code == 200
-    #assert r.json() == {"greeting": "Hello World!"}
-
+    assert r.json() == {"greeting": "Hello World!"}
 
 # Test POST method with "/items" endpoint
 def test_create_item():

@@ -59,7 +59,7 @@ def process_data(
 
     if training is True:
         encoder = OneHotEncoder(sparse_output=False, handle_unknown="ignore")
-        lb = LabelBinarizer()
+        lb = LabelBinarizer(pos_label=1)
         X_categorical = encoder.fit_transform(X_categorical)
         y = lb.fit_transform(y.values).ravel()
     else:

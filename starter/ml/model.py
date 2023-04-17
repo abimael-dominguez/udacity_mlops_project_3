@@ -85,6 +85,50 @@ def compute_roc_curve(X_test, y_test, best_model):
     # Save the plot to an image file
     plt.savefig('../screenshots/roc_curve.png')
 
+def compute_metrics_on_slices(data,
+                              slice_column,
+                              label_column,
+                              prediction_column):
+    """
+    Computes performance metrics for a model's predictions on subsets of the data.
+
+    Args:
+        data (pd.DataFrame): The input data on which the model was evaluated.
+        preds (List[int]): A list or array of binary predictions (1 or 0).
+        slice_column (str): The name of the column in `data` that contains the slices
+                            on which the performance metrics will be computed.
+
+    Note:
+        It is recommended to use the test data as input for `data` to better
+        estimate the model's performance in production.
+
+    Returns:
+        None
+    """
+
+    data = data[[slice_column, label_column, prediction_column]]
+    slice_metrics_list = []
+
+    for category in data[slice_column].unique():
+        mask = data[slice_column] == category
+        temp_data = data[mask]
+
+        precision, recall, fbeta = compute_model_metrics(
+            y=temp_data[label_column],
+            preds=temp_data[prediction_column])
+        
+        slice_metrics = {
+            'feature': slice_column,
+            'category': category,
+            'precision': precision,
+            'recall': recall,
+            'fbeta': fbeta
+        }
+
+        slice_metrics_list.append(slice_metrics)
+
+    return slice_metrics_list
+
 def inference(model, X):
     """ Run model inferences and return the predictions.
 
@@ -103,4 +147,5 @@ def inference(model, X):
 
     # Make predictions using the loaded model
     #X_new = [[1.0, 2.0, 3.0, 4.0]]
+    print(X)
     y_pred = model.predict(X)

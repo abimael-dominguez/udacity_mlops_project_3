@@ -198,13 +198,86 @@ For additional information see the Model Card paper: https://arxiv.org/pdf/1810.
         - CV: 5
     - Preprocessing:
         - The program takes in the data, processes it, trains the model, and saves it and the encoder.
+        - Most of the preprocessing is performed by the data.py script.
 
 ## Metrics
 _Please include the metrics used and your model's performance on those metrics._
     - Model performance measures
-    - Decision thresholds
-    - Variation approaches
+
+        - compute_roc_curve(X_test, y_test, best_model)
+            - Creates a picture of the ROC curve. This function was tested with a Naive Bayes model from Scikit Learn.
+        - compute_model_metrics(y, preds)
+            - Validates the trained machine learning model using precision, recall, and F1.
+        - compute_metrics_on_slices(data, slice_column, label_column, prediction_column)
+            - This function computes performance metrics on subsets of input data for a model's predictions, 
+            and returns a list of dictionaries containing the computed metrics for each slice. 
+    - Best hyperparameters: {'priors': [0.8, 0.2], 'var_smoothing': 1e-05}
+
+## Overall performance
+
+The overall peformance of the model was:
+
+- Test AUC: 0.6640069292947766
+- precision: 0.7545304777594728
+- recall: 0.29934640522875816
+- fbeta: 0.4286382779597567
+
+## Performance by slices
+
+Note: the metrics are sorted in ascending order and follow the sequence of recall, precision, and fbeta respectively.
+
+### Slices where the model performs worse (top 20)
+
+| feature         | category              | precision | recall | fbeta  |
+|----------------|-----------------------|-----------|--------|--------|
+| education      | 1st-4th               | 0.0       | 0.0    | 0.0    |
+| native-country | Guatemala             | 0.0       | 0.0    | 0.0    |
+| native-country | Columbia              | 0.0       | 0.0    | 0.0    |
+| marital-status | Married-AF-spouse     | 1.0       | 0.0    | 0.0    |
+| native-country | Nicaragua             | 1.0       | 0.0    | 0.0    |
+| native-country | Peru                  | 1.0       | 0.0    | 0.0    |
+| native-country | Portugal              | 1.0       | 0.0    | 0.0    |
+| native-country | Jamaica               | 1.0       | 0.0    | 0.0    |
+| native-country | Ireland               | 1.0       | 0.0    | 0.0    |
+| native-country | France                | 1.0       | 0.0    | 0.0    |
+| native-country | Vietnam               | 1.0       | 0.0    | 0.0    |
+| native-country | Poland                | 1.0       | 0.0    | 0.0    |
+| native-country | Haiti                 | 1.0       | 0.0    | 0.0    |
+| native-country | Hong                  | 1.0       | 0.0    | 0.0    |
+| native-country | Cambodia              | 1.0       | 0.0    | 0.0    |
+| native-country | Ecuador               | 1.0       | 0.0    | 0.0    |
+| native-country | Philippines           | 1.0       | 0.0909 | 0.1667 |
+| marital-status | Married-spouse-absent | 0.5       | 0.1111 | 0.1818 |
+| native-country | Mexico                | 0.25      | 0.1667 | 0.2    |
+
+### Slices where the model performs better (top 20)
+
+| feature         | category                     | precision | recall  | fbeta   |
+|-----------------|------------------------------|-----------|---------|---------|
+| workclass       | Without-pay                  | 1.0       | 1.0     | 1.0     |
+| education       | Preschool                    | 1.0       | 1.0     | 1.0     |
+| native-country  | El-Salvador                  | 1.0       | 1.0     | 1.0     |
+| native-country  | South                        | 1.0       | 1.0     | 1.0     |
+| native-country  | Dominican-Republic           | 1.0       | 1.0     | 1.0     |
+| native-country  | Greece                       | 1.0       | 1.0     | 1.0     |
+| native-country  | Yugoslavia                   | 1.0       | 1.0     | 1.0     |
+| native-country  | Honduras                     | 1.0       | 1.0     | 1.0     |
+| native-country  | Outlying-US(Guam-USVI-etc)   | 1.0       | 1.0     | 1.0     |
+| native-country  | Laos                         | 1.0       | 1.0     | 1.0     |
+| native-country  | Hungary                      | 1.0       | 1.0     | 1.0     |
+| native-country  | Trinadad&Tobago              | 1.0       | 1.0     | 1.0     |
+| native-country  | Scotland                     | 1.0       | 1.0     | 1.0     |
+| occupation      | Priv-house-serv              | 0.5       | 1.0     | 0.6667  |
+| native-country  | China                        | 0.5       | 1.0     | 0.6667  |
+| education       | 5th-6th                      | 0.4       | 1.0     | 0.5714  |
+| native-country  | Iran                         | 1.0       | 0.6667  | 0.8     |
+| native-country  | Puerto-Rico                  | 0.6667    | 0.6667  | 0.6667  |
+| education       | 11th                         | 1.0       | 0.5455  | 0.7059  |
+
 
 ## Ethical Considerations
+As far as we know, this data uses US dollars, which may not be suitable for certain use cases.
+To obtain a more accurate understanding of people's purchasing power, it might be beneficial to use the local currency.
 
 ## Caveats and Recommendations
+Observations reveal that there are two distinct groups in terms of performance on the "native-country" feature. One group has low performance, while the other has good performance (in the same "native-country" feature). This implies that geographical location may significantly impact the data. To address this issue, it is suggested to either create a model by country or to group similar countries and train a model accordingly. It is also recommended to test different algorithms to improve model performance.

@@ -160,7 +160,7 @@ for cat_feat in cat_features:
     slices_results += temp_results
 
 slices_df = round(pd.DataFrame(slices_results), 4)
-slices_df = slices_df.sort_values(by=['recall', 'precision', 'fbeta'])
+slices_df = slices_df.sort_values(by=['recall', 'precision', 'fbeta'])  # ascending=False
 slices_df.to_csv('../data/slice_output.txt', encoding='utf-8', sep=',', index=False)
 slices_df.to_csv('../data/slice_output.csv', encoding='utf-8', sep=',', index=False)
 

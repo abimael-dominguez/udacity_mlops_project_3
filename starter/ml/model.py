@@ -65,7 +65,7 @@ def compute_model_metrics(y, preds):
 
 def compute_roc_curve(X_test, y_test, best_model):
     """
-    Create a picture of the ROC curve.
+    Creates a picture of the ROC curve.
     This function was tested with a Naive Bayes model from Scikit Learn.
     """
     # Evaluate the model on the test data
@@ -85,27 +85,28 @@ def compute_roc_curve(X_test, y_test, best_model):
     # Save the plot to an image file
     plt.savefig('../screenshots/roc_curve.png')
 
-def compute_metrics_on_slices(data,
-                              slice_column,
-                              label_column,
-                              prediction_column):
+def compute_metrics_on_slices(data, slice_column, label_column, prediction_column):
     """
     Computes performance metrics for a model's predictions on subsets of the data.
 
     Args:
         data (pd.DataFrame): The input data on which the model was evaluated.
-        preds (List[int]): A list or array of binary predictions (1 or 0).
-        slice_column (str): The name of the column in `data` that contains the slices
-                            on which the performance metrics will be computed.
+        slice_column (str): The name of the column in `data` that contains the slices on which 
+            the performance metrics will be computed.
+        label_column (str): The name of the column in `data` that contains the true labels.
+        prediction_column (str): The name of the column in `data` that contains the model predictions.
 
     Note:
-        It is recommended to use the test data as input for `data` to better
-        estimate the model's performance in production.
+        It is recommended to use the test data as input for `data` to better estimate the model's 
+        performance in production.
 
     Returns:
-        None
+        slice_metrics_list (List[Dict[str, Union[str, float]]]): A list of dictionaries, where each 
+        dictionary contains the computed performance metrics for a slice. Each dictionary has the 
+        following keys: 'feature' (the name of the slice column), 'category' (the name of the 
+        slice category), 'precision' (the precision score for the slice), 'recall' (the recall score 
+        for the slice), and 'fbeta' (the F-beta score for the slice).
     """
-
     data = data[[slice_column, label_column, prediction_column]]
     slice_metrics_list = []
 
@@ -116,7 +117,7 @@ def compute_metrics_on_slices(data,
         precision, recall, fbeta = compute_model_metrics(
             y=temp_data[label_column],
             preds=temp_data[prediction_column])
-        
+
         slice_metrics = {
             'feature': slice_column,
             'category': category,

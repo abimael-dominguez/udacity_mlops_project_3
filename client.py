@@ -92,7 +92,7 @@ def main():
 
     # define the URL of the API endpoint
     url_local = 'http://127.0.0.1:8000/model/predict'
-    url_cloud = 'http://127.0.0.1:8000/model/predict'
+    url_cloud = 'https://render-project3-ml-devops-api.onrender.com/model/predict'
 
     # define the payload data to send as a dictionary
     payload = {
@@ -113,7 +113,7 @@ def main():
     }
 
     # send the POST request with the payload data
-    response = requests.post(url, json=payload)
+    response = requests.post(url_local, json=payload)
 
     return response
 

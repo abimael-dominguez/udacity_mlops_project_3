@@ -91,7 +91,8 @@ import requests
 def main():
 
     # define the URL of the API endpoint
-    url = 'http://127.0.0.1:8000/model/predict'
+    url_local = 'http://127.0.0.1:8000/model/predict'
+    url_cloud = 'http://127.0.0.1:8000/model/predict'
 
     # define the payload data to send as a dictionary
     payload = {

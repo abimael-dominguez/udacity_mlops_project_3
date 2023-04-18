@@ -1,3 +1,4 @@
+# This versions were used for the CI/CD.
 numpy
 pandas
 scikit-learn

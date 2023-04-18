@@ -51,7 +51,7 @@ Note: the client.py can make request to th local API o to the API in the cloud, 
 
 # Apply Autopep8
 - To clean the code the code and assure CI phase succeed you can apply:
-    - autopep8 --in-place --aggressive --aggressive client.py conftest.py main.py test_main.py test_slices.py starter/ml/model.py starter/ml/data.py starter/train_model.py
+    - autopep8 --in-place --aggressive --aggressive client.py conftest.py main.py test_main.py test_ml.py starter/ml/model.py starter/ml/data.py starter/train_model.py
 
 # CI with GitHub Actions (flake8)
 - If it encounters any errors, it causes the CI process to stop and report a failure. The GitHub editor is 127 chars wide.

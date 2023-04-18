@@ -46,7 +46,7 @@ def test_precision_united_states(data_slices_performance):
 
 def test_overall_avg_recall(data_slices_performance):
     """
-    Using the slice_output.csv calculates 
+    Using the slice_output.csv calculates
     the average of the recall column.
     """
     assert data_slices_performance['recall'].mean() > 0.1
@@ -54,7 +54,7 @@ def test_overall_avg_recall(data_slices_performance):
 
 def test_overall_avg_fbeta(data_slices_performance):
     """
-    Using the slice_output.csv calculates 
+    Using the slice_output.csv calculates
     the average of the fbeta column.
     """
     assert data_slices_performance['fbeta'].mean() > 0.3

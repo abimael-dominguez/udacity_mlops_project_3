@@ -1,6 +1,17 @@
 """
-Sample of data:
+Main API.
 
+To run the API:
+    - uvicorn main:app --reload
+To run the client:
+    - python client.py 
+To run the tests:
+    python -m pytest test_main.py
+    pytest -vv test_main.py
+
+Data to test the API
+
+Data Examples ("salary":"<=50K"):
 [
     {
         "age":53,
@@ -16,8 +27,7 @@ Sample of data:
         "capital-gain":0,
         "capital-loss":0,
         "hours-per-week":70,
-        "native-country":"United-States",
-        "salary":0
+        "native-country":"United-States"
     },
     {
         "age":49,
@@ -33,44 +43,51 @@ Sample of data:
         "capital-gain":0,
         "capital-loss":0,
         "hours-per-week":70,
-        "native-country":"United-States",
-        "salary":0
-    },
+        "native-country":"United-States"
+    }
+]
+
+Data Examples ("salary":">50K"):
+
+[
     {
-        "age":55,
+        "age":38,
         "workclass":"Private",
-        "fnlgt":125000,
-        "education":"Masters",
-        "education-num":14,
-        "marital-status":"Divorced",
-        "occupation":"Exec-managerial",
-        "relationship":"Unmarried",
-        "race":"White",
-        "sex":"Male",
-        "capital-gain":0,
-        "capital-loss":0,
-        "hours-per-week":40,
-        "native-country":"United-States",
-        "salary":1
-    },
-    {
-        "age":57,
-        "workclass":"Federal-gov",
-        "fnlgt":414994,
-        "education":"Some-college",
-        "education-num":10,
+        "fnlgt":76878,
+        "education":"11th",
+        "education-num":7,
         "marital-status":"Married-civ-spouse",
-        "occupation":"Exec-managerial",
+        "occupation":"Craft-repair",
         "relationship":"Husband",
         "race":"White",
         "sex":"Male",
-        "capital-gain":0,
+        "capital-gain":5178,
         "capital-loss":0,
         "hours-per-week":40,
-        "native-country":"United-States",
-        "salary":1
+        "native-country":"United-States"
+    },
+    {
+        "age":46,
+        "workclass":"Private",
+        "fnlgt":241935,
+        "education":"11th",
+        "education-num":7,
+        "marital-status":"Married-civ-spouse",
+        "occupation":"Other-service",
+        "relationship":"Husband",
+        "race":"Black",
+        "sex":"Male",
+        "capital-gain":7688,
+        "capital-loss":0,
+        "hours-per-week":40,
+        "native-country":"United-States"
     }
 ]
+
+
+- Fast API references:
+    - https://fastapi.tiangolo.com/tutorial/first-steps/
+    - https://fastapi.tiangolo.com/tutorial/schema-extra-example/#__tabbed_1_2
 
 """
 from fastapi import FastAPI, Body

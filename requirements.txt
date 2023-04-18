@@ -3,7 +3,7 @@ pandas
 scikit-learn==1.2.2 
 pytest
 requests
-fastapi==0.63.0
+fastapi==0.95.0
 httpx
 uvicorn
 gunicorn

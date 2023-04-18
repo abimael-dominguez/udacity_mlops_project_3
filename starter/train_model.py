@@ -22,9 +22,6 @@ print("Process Data")
 
 train, test = train_test_split(data, test_size=0.2, random_state=42)
 
-mask = (test['education'] == '11th') & (test['salary'] == '>50K')
-print((test[mask]).head(2).to_dict(orient='records'))
-
 cat_features = [
     "workclass",
     "education",
@@ -36,11 +33,14 @@ cat_features = [
     "native-country",
 ]
 
+mapping_labels = {'>50K': 1, '<=50K': 0} 
+
 X_train, y_train, encoder, label_binarizer = process_data(
     train,
     categorical_features=cat_features,
     label="salary",
-    training=True
+    training=True,
+    mapping_labels=mapping_labels
 )
 
 # Process the test data with the process_data function.
@@ -52,6 +52,7 @@ X_test, y_test, _, _ = process_data(
     training=False,
     encoder=encoder,
     lb=label_binarizer,
+    mapping_labels=mapping_labels
 )
 
 print("Finish Process Data")
@@ -99,4 +100,4 @@ print("Finish train_model.py")
 
 # Model inference
 #model = joblib.load('../model/naive_bayes_model.pkl')
-#inference(model=model, X=X_test)
+#inference(model=model, X=X_test)""

@@ -91,8 +91,8 @@ import requests
 def main():
 
     # define the URL of the API endpoint
-    url_local = 'http://127.0.0.1:8000/model/predict'
-    url_cloud = 'https://render-project3-ml-devops-api.onrender.com/model/predict'
+    url_local = 'http://127.0.0.1:8000/model/predict'  # localhost
+    url_cloud = 'https://render-project3-ml-devops-api.onrender.com/model/predict' # this will be unavailable soon
 
     # define the payload data to send as a dictionary
     payload = {
@@ -113,7 +113,7 @@ def main():
     }
 
     # send the POST request with the payload data
-    response = requests.post(url_local, json=payload)
+    response = requests.post(url_cloud, json=payload)
 
     return response
 
@@ -123,3 +123,13 @@ if __name__ == "__main__":
     my_response = main()
     print(my_response.status_code)
     print(my_response.json())
+
+    server_header = my_response.headers.get('Server')
+    if server_header:
+        hostname = server_header.split('/')[0]
+        print(f"Response came from server: {hostname}")
+    else:
+        print("Unable to determine server information from response headers.")
+
+    source_url = my_response.request.url
+    print(f"Response came from: {source_url}")

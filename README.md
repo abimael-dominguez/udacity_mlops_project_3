@@ -28,8 +28,33 @@ Prediction task is to determine whether a person makes over 50K a year.
 | hours-per-week   | continuous                                                                                                                     |
 | native-country   | United-States, Cambodia, England, Puerto-Rico, Canada, Germany, Outlying-US(Guam-USVI-etc), India, Japan, Greece,<br> South, China, Cuba, Iran, Honduras, Philippines, Italy, Poland, Jamaica, Vietnam, Mexico, Portugal, Ireland, France,<br>  Dominican-Republic, Laos, Ecuador, Taiwan, Haiti, Columbia, Hungary, Guatemala, Nicaragua, Scotland, <br>Thailand, Yugoslavia, El-Salvador, Trinadad&Tobago, Peru, Hong, Holand-Netherlands. |
 
+# Training
+If you want to train or retrain the model you should go to the directory: ./starter.
+Don't run the script from the outside this directory.
+- command:
+    - pyhton train_model.py
 
-# Environment Set up
+# Testing (pytest)
+- In tha main directory run the following:
+    - pytest -vv 
+
+# Run the API
+- To run the API:
+    - uvicorn main:app --reload
+- To run the client:
+    - python client.py
+
+Note: the client.py can make request to th local API o to the API in the cloud, please adapt the code so you query the service which is available. 
+
+# GitHub link
+    - https://github.com/abimael-dominguez/udacity_mlops_project_3
+
+# More information
+For more information about this model please see the model_card.md.
+
+# Project instructions
+
+## Environment Set up
 
 Working in a command line environment is recommended for ease of use with git and dvc. If on Windows, WSL1 or 2 is recommended.
 

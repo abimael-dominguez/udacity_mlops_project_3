@@ -1,5 +1,11 @@
 """
 Train the model
+
+Run this script inside this directory: ./starter
+Don't run the script outside this directory.
+
+command:
+    - pyhton train_model.py
 """
 
 # Script to train machine learning model.

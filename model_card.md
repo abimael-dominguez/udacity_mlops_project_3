@@ -281,3 +281,9 @@ To obtain a more accurate understanding of people's purchasing power, it might b
 
 ## Caveats and Recommendations
 Observations reveal that there are two distinct groups in terms of performance on the "native-country" feature. One group has low performance, while the other has good performance (in the same "native-country" feature). This implies that geographical location may significantly impact the data. To address this issue, it is suggested to either create a model by country or to group similar countries and train a model accordingly. It is also recommended to test different algorithms to improve model performance.
+
+
+## Future Work
+- Structure better my code to implement training, and inference. 
+- Avoid the CI/CD dependency issues when installing the requirements.txt (use only pip or only conda in the local enviroment, Github Actions and Render).
+- Improve the performance of the model (roc_auc=0.66).

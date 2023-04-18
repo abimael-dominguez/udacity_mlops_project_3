@@ -253,6 +253,4 @@ async def get_predictions(person: example_person):
         "prediction": int(my_prediction[0])
     }
 
-    print(result)
-
     return result

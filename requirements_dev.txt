@@ -1,4 +1,4 @@
-# This versions were used in the local enviroment.
+# This is an optional set of dependencies for Conda.
 numpy==1.24.2
 pandas==2.0.0
 scikit-learn==1.2.2 

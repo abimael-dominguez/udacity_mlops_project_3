@@ -10,19 +10,21 @@ See other branches:
 
 from fastapi.testclient import TestClient
 from main import app
-
+from starter.ml.model import inference
 
 # Instantiate the testing client with our app.
 client = TestClient(app)
 
 # Test "/" endpoint
+
+
 def test_api_locally_get_root():
     r = client.get("/")
     assert r.status_code == 200
     assert r.json() == {"greeting": "Hello World!"}
 
 
-## Test for ML
+# Test for ML
 
 def test_prediction_request():
     """
@@ -32,21 +34,21 @@ def test_prediction_request():
     r = client.post(
         url="/model/predict/",
         json={
-        "age":38,
-        "workclass":"Private",
-        "fnlgt":76878,
-        "education":"11th",
-        "education-num":7,
-        "marital-status":"Married-civ-spouse",
-        "occupation":"Craft-repair",
-        "relationship":"Husband",
-        "race":"White",
-        "sex":"Male",
-        "capital-gain":5178,
-        "capital-loss":0,
-        "hours-per-week":40,
-        "native-country":"United-States"
-    }
+            "age": 38,
+            "workclass": "Private",
+            "fnlgt": 76878,
+            "education": "11th",
+            "education-num": 7,
+            "marital-status": "Married-civ-spouse",
+            "occupation": "Craft-repair",
+            "relationship": "Husband",
+            "race": "White",
+            "sex": "Male",
+            "capital-gain": 5178,
+            "capital-loss": 0,
+            "hours-per-week": 40,
+            "native-country": "United-States"
+        }
     )
     assert r.status_code == 200
     data = r.json()
@@ -74,21 +76,21 @@ def test_prediction_result():
     r = client.post(
         url="/model/predict/",
         json={
-        "age":38,
-        "workclass":"Private",
-        "fnlgt":76878,
-        "education":"11th",
-        "education-num":7,
-        "marital-status":"Married-civ-spouse",
-        "occupation":"Craft-repair",
-        "relationship":"Husband",
-        "race":"White",
-        "sex":"Male",
-        "capital-gain":5178,
-        "capital-loss":0,
-        "hours-per-week":40,
-        "native-country":"United-States"
-    }
+            "age": 38,
+            "workclass": "Private",
+            "fnlgt": 76878,
+            "education": "11th",
+            "education-num": 7,
+            "marital-status": "Married-civ-spouse",
+            "occupation": "Craft-repair",
+            "relationship": "Husband",
+            "race": "White",
+            "sex": "Male",
+            "capital-gain": 5178,
+            "capital-loss": 0,
+            "hours-per-week": 40,
+            "native-country": "United-States"
+        }
     )
     assert r.status_code == 200
     data = r.json()

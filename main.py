@@ -4,7 +4,7 @@ Main API.
 To run the API:
     - uvicorn main:app --reload
 To run the client:
-    - python client.py 
+    - python client.py
 To run the tests:
     python -m pytest test_main.py
     pytest -vv test_main.py
@@ -91,11 +91,13 @@ Data Examples ("salary":">50K"):
 
 """
 from fastapi import FastAPI, Body
-# Import Union since our Item object will have tags that can be strings or a list.
+# Import Union since our Item object will have tags that can be strings or
+# a list.
 from typing import Union
 # BaseModel from Pydantic is used to define data objects.
 from pydantic import BaseModel, Field
-from typing_extensions import Annotated  # for python 3.9 use from typing import Annotated
+# for python 3.9 use from typing import Annotated
+from typing_extensions import Annotated
 import pandas as pd
 import joblib
 
@@ -103,10 +105,13 @@ from starter.ml.data import process_data
 from starter.ml.model import inference
 
 # Declare the data object with its components and their type.
+
+
 class TaggedItem(BaseModel):
     name: str
     tags: Union[str, list]
     item_id: int
+
 
 # Save items from POST method in the memory
 items = {}
@@ -115,11 +120,15 @@ items = {}
 app = FastAPI()
 
 # Welcome message in the root
+
+
 @app.get("/")
 def read_root():
     return {"greeting": "Hello World!"}
 
 # This allows sending of data (our TaggedItem) via POST to the API.
+
+
 @app.post("/items/")
 async def create_item(item: TaggedItem):
     items[item.item_id] = item
@@ -127,17 +136,19 @@ async def create_item(item: TaggedItem):
 
 
 # A GET that in this case just returns the item_id we pass,
-# but a future iteration may link the item_id here to the one we defined in our TaggedItem.
+# but a future iteration may link the item_id here to the one we defined
+# in our TaggedItem.
 @app.get("/items/{item_id}")
 async def get_items(item_id: int, count: int = 1):
     try:
         item = items[item_id]
-    except:
+    except BaseException:
         return "Item not found."
 
     return {"fetch": f"Fetched: {item.name} with qty of {count}"}
 
 # --------------- INFERENCE ---------------
+
 
 class Person(BaseModel):
     age: int
@@ -155,32 +166,34 @@ class Person(BaseModel):
     hours_per_week: Union[int, float] = Field(..., alias="hours-per-week")
     native_country: str = Field(..., alias="native-country")
 
+
 example_person = Annotated[
-                            Person,
-                            Body(
-                                example={
-                                    "age":57,
-                                    "workclass":"Federal-gov",
-                                    "fnlgt":414994,
-                                    "education":"Some-college",
-                                    "education-num":10,
-                                    "marital-status":"Married-civ-spouse",
-                                    "occupation":"Exec-managerial",
-                                    "relationship":"Husband",
-                                    "race":"White",
-                                    "sex":"Male",
-                                    "capital-gain":0,
-                                    "capital-loss":0,
-                                    "hours-per-week":40,
-                                    "native-country":"United-States"
-                                }
-                            )
-                        ]
+    Person,
+    Body(
+        example={
+            "age": 57,
+            "workclass": "Federal-gov",
+            "fnlgt": 414994,
+            "education": "Some-college",
+            "education-num": 10,
+            "marital-status": "Married-civ-spouse",
+            "occupation": "Exec-managerial",
+            "relationship": "Husband",
+            "race": "White",
+            "sex": "Male",
+            "capital-gain": 0,
+            "capital-loss": 0,
+            "hours-per-week": 40,
+            "native-country": "United-States"
+        }
+    )
+]
 
 # Inference
+
+
 @app.post("/model/predict/")
 async def get_predictions(person: example_person):
-
 
     data = [
         {
@@ -204,20 +217,21 @@ async def get_predictions(person: example_person):
     df = pd.DataFrame(data)
 
     # Be sure of the column order
-    df.columns = ["age"
-                  ,"workclass"
-                  ,"fnlgt"
-                  ,"education"
-                  ,"education-num"
-                  ,"marital-status"
-                  ,"occupation"
-                  ,"relationship"
-                  ,"race"
-                  ,"sex"
-                  ,"capital-gain"
-                  ,"capital-loss"
-                  ,"hours-per-week"
-                  ,"native-country"]
+    df.columns = [
+        "age",
+        "workclass",
+        "fnlgt",
+        "education",
+        "education-num",
+        "marital-status",
+        "occupation",
+        "relationship",
+        "race",
+        "sex",
+        "capital-gain",
+        "capital-loss",
+        "hours-per-week",
+        "native-country"]
 
     cat_features = [
         "workclass",
@@ -230,13 +244,12 @@ async def get_predictions(person: example_person):
         "native-country",
     ]
 
-    
     # Load model
-    
+
     model = joblib.load('./model/naive_bayes_model.pkl')
     encoder = joblib.load('./model/encoder.pkl')
     label_binarizer = joblib.load('./model/label_binarizer.pkl')
-    
+
     X, _, _, _ = process_data(
         df,
         categorical_features=cat_features,
@@ -249,7 +262,7 @@ async def get_predictions(person: example_person):
     my_prediction = inference(model=model, X=X)
 
     result = {
-        "query":data[0],
+        "query": data[0],
         "prediction": int(my_prediction[0])
     }
 

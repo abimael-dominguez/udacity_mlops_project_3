@@ -4,7 +4,7 @@ Client API.
 To run the API:
     - uvicorn main:app --reload
 To run the client:
-    - python client.py 
+    - python client.py
 To run the tests:
     python -m pytest test_main.py
     pytest -vv test_main.py
@@ -88,34 +88,40 @@ Data Examples ("salary":">50K"):
 
 import requests
 
+
 def main():
 
     # define the URL of the API endpoint
     url_local = 'http://127.0.0.1:8000/model/predict'  # localhost
-    url_cloud = 'https://render-project3-ml-devops-api.onrender.com/model/predict' # this will be unavailable soon
+    # this will be unavailable soon
+    url_cloud = 'https://render-project3-ml-devops-api.onrender.com/model/predict'
 
     # define the payload data to send as a dictionary
     payload = {
-        "age":46,
-        "workclass":"Private",
-        "fnlgt":241935,
-        "education":"11th",
-        "education-num":7,
-        "marital-status":"Married-civ-spouse",
-        "occupation":"Other-service",
-        "relationship":"Husband",
-        "race":"Black",
-        "sex":"Male",
-        "capital-gain":7688,
-        "capital-loss":0,
-        "hours-per-week":40,
-        "native-country":"United-States"
+        "age": 46,
+        "workclass": "Private",
+        "fnlgt": 241935,
+        "education": "11th",
+        "education-num": 7,
+        "marital-status": "Married-civ-spouse",
+        "occupation": "Other-service",
+        "relationship": "Husband",
+        "race": "Black",
+        "sex": "Male",
+        "capital-gain": 7688,
+        "capital-loss": 0,
+        "hours-per-week": 40,
+        "native-country": "United-States"
     }
+
+    print("url_local: ", url_local)
+    print("url_cloud: ", url_cloud)
 
     # send the POST request with the payload data
     response = requests.post(url_cloud, json=payload)
 
     return response
+
 
 if __name__ == "__main__":
     # print the response from the server

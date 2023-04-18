@@ -10,7 +10,7 @@ See other branches:
 
 from fastapi.testclient import TestClient
 from main import app
-from starter.ml.model import inference
+# from starter.ml.model import inference
 
 # Instantiate the testing client with our app.
 client = TestClient(app)

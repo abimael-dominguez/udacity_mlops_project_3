@@ -49,6 +49,18 @@ Note: the client.py can make request to th local API o to the API in the cloud, 
 # GitHub link
     - https://github.com/abimael-dominguez/udacity_mlops_project_3
 
+# Apply Autopep8
+- To clean the code the code and assure CI phase succeed you can apply:
+    - autopep8 --in-place --aggressive --aggressive client.py conftest.py main.py test_main.py test_slices.py starter/ml/model.py starter/ml/data.py starter/train_model.py
+
+# CI with GitHub Actions (flake8)
+- If it encounters any errors, it causes the CI process to stop and report a failure. The GitHub editor is 127 chars wide.
+    - flake8 . --count --max-complexity=18 --max-line-length=127 --statistics
+
+# CD in Render Cloud
+The GitHub repository was connected to Render. Automatic deployment was enabled for every "push" send to the repository (If CI succeed)
+
+
 # More information
 For more information about this model please see the model_card.md.
 

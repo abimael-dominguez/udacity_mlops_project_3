@@ -48,10 +48,9 @@ def process_data(
     if categorical_features == None:
         categorical_features = []
 
-    mapping = {'>50K': 1, '<=50K': 0}
-    X['salary'] = X['salary'].map(mapping)
-
     if label is not None:
+        mapping = {'>50K': 1, '<=50K': 0}
+        X['salary'] = X['salary'].map(mapping)
         y = X[label]
         X = X.drop([label], axis=1)
     else:

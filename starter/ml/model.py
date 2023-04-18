@@ -148,5 +148,7 @@ def inference(model, X):
 
     # Make predictions using the loaded model
     #X_new = [[1.0, 2.0, 3.0, 4.0]]
-    print(X)
+
     y_pred = model.predict(X)
+
+    return y_pred

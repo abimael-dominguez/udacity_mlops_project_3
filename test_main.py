@@ -1,4 +1,6 @@
 """
+Run the API:
+    - uvicorn main:app --reload
 See other branches:
     git log --graph --decorate --oneline
 To run the tests:
@@ -41,3 +43,20 @@ def test_get_item():
         headers={"X-Token": "coneofsilence"},
     )
     assert r.status_code == 200
+
+
+## Test for ML
+
+# Test POST method with "/items" endpoint
+def test_create_item():
+    r = client.post(
+        "/items/",
+        headers={"X-Token": "coneofsilence"},
+        json={"name": "Air Jordan 1", "tags": "shoes", "item_id": 1},
+    )
+    assert r.status_code == 200
+    assert r.json() == {
+        "name": "Air Jordan 1",
+        "tags": "shoes",
+        "item_id": 1
+    }

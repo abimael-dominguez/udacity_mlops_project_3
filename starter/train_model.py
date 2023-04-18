@@ -1,7 +1,8 @@
 """
 
-Sample of data:
+Data to test the API
 
+Data Examples ("salary":"<=50K"):
 [
     {
         "age":53,
@@ -17,8 +18,7 @@ Sample of data:
         "capital-gain":0,
         "capital-loss":0,
         "hours-per-week":70,
-        "native-country":"United-States",
-        "salary":0
+        "native-country":"United-States"
     },
     {
         "age":49,
@@ -34,45 +34,46 @@ Sample of data:
         "capital-gain":0,
         "capital-loss":0,
         "hours-per-week":70,
-        "native-country":"United-States",
-        "salary":0
-    },
-    {
-        "age":55,
-        "workclass":"Private",
-        "fnlgt":125000,
-        "education":"Masters",
-        "education-num":14,
-        "marital-status":"Divorced",
-        "occupation":"Exec-managerial",
-        "relationship":"Unmarried",
-        "race":"White",
-        "sex":"Male",
-        "capital-gain":0,
-        "capital-loss":0,
-        "hours-per-week":40,
-        "native-country":"United-States",
-        "salary":1
-    },
-    {
-        "age":57,
-        "workclass":"Federal-gov",
-        "fnlgt":414994,
-        "education":"Some-college",
-        "education-num":10,
-        "marital-status":"Married-civ-spouse",
-        "occupation":"Exec-managerial",
-        "relationship":"Husband",
-        "race":"White",
-        "sex":"Male",
-        "capital-gain":0,
-        "capital-loss":0,
-        "hours-per-week":40,
-        "native-country":"United-States",
-        "salary":1
+        "native-country":"United-States"
     }
 ]
 
+Data Examples ("salary":">50K"):
+
+[
+    {
+        "age":38,
+        "workclass":"Private",
+        "fnlgt":76878,
+        "education":"11th",
+        "education-num":7,
+        "marital-status":"Married-civ-spouse",
+        "occupation":"Craft-repair",
+        "relationship":"Husband",
+        "race":"White",
+        "sex":"Male",
+        "capital-gain":5178,
+        "capital-loss":0,
+        "hours-per-week":40,
+        "native-country":"United-States"
+    },
+    {
+        "age":46,
+        "workclass":"Private",
+        "fnlgt":241935,
+        "education":"11th",
+        "education-num":7,
+        "marital-status":"Married-civ-spouse",
+        "occupation":"Other-service",
+        "relationship":"Husband",
+        "race":"Black",
+        "sex":"Male",
+        "capital-gain":7688,
+        "capital-loss":0,
+        "hours-per-week":40,
+        "native-country":"United-States"
+    }
+]
 
 """
 
@@ -96,6 +97,8 @@ print("Process Data")
 
 train, test = train_test_split(data, test_size=0.2, random_state=42)
 
+mask = (test['education'] == '11th') & (test['salary'] == '>50K')
+print((test[mask]).head(2).to_dict(orient='records'))
 
 cat_features = [
     "workclass",
@@ -108,7 +111,7 @@ cat_features = [
     "native-country",
 ]
 
-X_train, y_train, encoder, label = process_data(
+X_train, y_train, encoder, label_binarizer = process_data(
     train,
     categorical_features=cat_features,
     label="salary",
@@ -123,7 +126,7 @@ X_test, y_test, _, _ = process_data(
     label="salary",
     training=False,
     encoder=encoder,
-    lb=label,
+    lb=label_binarizer,
 )
 
 print("Finish Process Data")
@@ -139,8 +142,11 @@ precision, recall, fbeta = compute_model_metrics(y=y_test, preds=predictions_on_
 print(f"precision: {precision}")
 print(f"recall: {recall}")
 print(f"fbeta: {fbeta}")
+
+# Save the model 
 joblib.dump(best_nb, '../model/naive_bayes_model.pkl')
 joblib.dump(encoder, '../model/encoder.pkl')
+joblib.dump(label_binarizer, '../model/label_binarizer.pkl')
 
 print("Finish training")
 
